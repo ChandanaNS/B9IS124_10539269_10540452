@@ -1,0 +1,219 @@
+@import 'variables';
+@import 'navigation';
+@import 'common';
+
+/* #HEADER
+================================================== */
+
+header {
+  background: #3279a1;
+  text-align: center;
+  padding: 1.5em 1em 1em 1em;
+}
+
+header #logo a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+/* #Two unequal columns that floats next to each other 
+================================================== */
+
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 74%;
+  max-height: 768px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Add a card effect for articles */
+.card {
+  background-color: $base-color-white;
+  padding: 20px;
+  // height: 50%;
+  height: 370px;
+  margin: 5px;
+  border: 2px solid #1c6ea4;
+  -webkit-box-shadow: 0px 0px 25px 5px $base-color-black;
+  -moz-box-shadow: 0px 0px 25px 5px $base-color-black;
+  box-shadow: 0px 0px 25px 5px $base-color-black;
+  border-radius: $base-border-radius;
+  box-sizing: border-box;
+
+  > p {
+    overflow: hidden;
+    width: 100%;
+    height: 120px;
+    hyphens: auto;
+    // text-overflow: ellipsis;
+  }
+  /* Fake image */
+  .fakeimg,
+  .trendingimg {
+    background-color: $base-color-blue;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid #0c2130;
+    border-radius: $base-border-radius;
+  }
+  .fakeimg {
+    float: right;
+  }
+  figcaption {
+    display: inline-flex;
+    margin: 2px 0px;
+  }
+
+  .post_title {
+    margin: unset;
+    font-family: $title-font-family;
+  }
+  .authors-link,
+  .categories-link {
+    cursor: pointer;
+    text-decoration: none;
+    font-size: larger;
+    color: $base-color-black;
+    font-family: $link_font-family;
+  }
+
+  .categories-link {
+    color: $base-color-blue;
+  }
+}
+/* Right column */
+.rightcolumn {
+  float: right;
+  width: 25%;
+  .card {
+    height: inherit !important;
+  }
+}
+// single post page
+.singlecard {
+  height: inherit;
+  > p {
+    height: inherit;
+  }
+  .fakeimg {
+    width: 100%;
+    height: inherit;
+  }
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+li.loading {
+  list-style: none;
+  width: 100px;
+  height: 100px;
+  float: left;
+  margin-right: 20px;
+  background: $base-color-black;
+  img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+  }
+}
+
+.filter {
+  position: absolute;
+  padding: 4px 10px;
+  top: 12px;
+  right: 12px;
+  background-color: #01acc4;
+  color: white;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+/* #PAGINATION
+================================================== */
+
+.pagination {
+  width: 100%;
+  .prev,
+  .next {
+    width: 50%;
+    float: left;
+  }
+  /* Clear floats (clearfix) */
+  .pagination:after {
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  .pagination button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+  }
+}
+
+/* #Footer
+================================================== */
+
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: $base-color-black;
+  color: $base-color-white;
+  margin-top: 20px;
+}
+
+// @import '_navigation';
+/* Responsive layout - when the screen is less than 768px wide, make the two columns stack on top of each other instead of next to each other */
+
+/* MEDIA QUERIES
+Description: Define screen-size breakpoints here.
+(e.g. Desktop, Tablet, Mobile)
+===================================== */
+
+/* Tablet (Between 768px - 992px)*/
+@media all and (min-width: 768px) and (max-width: 992px) {
+}
+
+/* MOBILE (Smaller than 768px)*/
+@media all and (max-width: 767px) and (max-width: 992px) {
+  .card {
+    height: 370px;
+  }
+  // single post page
+  .singlecard {
+    height: auto;
+    .fakeimg {
+      width: 100%;
+    }
+  }
+  .leftcolumn {
+    width: 100%;
+    padding: 0;
+  }
+  .rightcolumn {
+    display: none;
+  }
+}
+
+// @media only screen and (max-width: 600px) {...}
+
+// /* Small devices (portrait tablets and large phones, 600px and up) */
+// @media only screen and (min-width: 600px) {...}
+
+// /* Medium devices (landscape tablets, 768px and up) */
+// @media only screen and (min-width: 768px) {...}
+
+/* Large devices (laptops/desktops, 992px and up) */
+// @media only screen and (min-width: 992px) {}
+
+// /* Extra large devices (large laptops and desktops, 1200px and up) */
+// @media only screen and (min-width: 1200px) {...}

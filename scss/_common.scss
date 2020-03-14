@@ -1,0 +1,16 @@
+/* actual css starts here */
+body {
+  font-family: $base-font-family;
+  padding: 20px;
+  background: $base-color-white;
+}
+
+//Button CSS
+button {
+  background-color: $base-color-blue;
+  border: none;
+  color: white;
+  padding: 10px 28px;
+  font-size: 16px;
+  border-radius: $base-border-radius;
+}

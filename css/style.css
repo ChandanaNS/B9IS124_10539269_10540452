@@ -1,0 +1,290 @@
+/*Variables*/
+/* #NAVIGATION
+================================================== */
+#nav-links {
+  background: #333;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+#nav-links #nav-links-menu {
+  display: none;
+  padding: 0.8em 1.5em;
+  cursor: pointer;
+}
+
+#nav-links ul {
+  display: block;
+  margin: 0;
+  text-align: center;
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+#nav-links ul li {
+  margin: 0;
+  list-style: none;
+  display: inline-block;
+}
+
+#nav-links ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+  padding: 0.9em 1.5em 0.8em 1.5em;
+}
+
+#nav-links ul li a:hover {
+  color: #000;
+  background: #aaa;
+}
+
+.content {
+  padding: 1.5em;
+}
+
+/* actual css starts here */
+body {
+  font-family: "Roboto", sans-serif;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+button {
+  background-color: #567284;
+  border: none;
+  color: white;
+  padding: 10px 28px;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+/* #HEADER
+================================================== */
+header {
+  background: #3279a1;
+  text-align: center;
+  padding: 1.5em 1em 1em 1em;
+}
+
+header #logo a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* #Two unequal columns that floats next to each other 
+================================================== */
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 74%;
+  max-height: 768px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Add a card effect for articles */
+.card {
+  background-color: #f1f1f1;
+  padding: 20px;
+  height: 370px;
+  margin: 5px;
+  border: 2px solid #1c6ea4;
+  -webkit-box-shadow: 0px 0px 25px 5px #000000;
+  box-shadow: 0px 0px 25px 5px #000000;
+  border-radius: 5px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  /* Fake image */
+}
+
+.card > p {
+  overflow: hidden;
+  width: 100%;
+  height: 120px;
+  -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+          hyphens: auto;
+}
+
+.card .fakeimg,
+.card .trendingimg {
+  background-color: #567284;
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border: 2px solid #0c2130;
+  border-radius: 5px;
+}
+
+.card .fakeimg {
+  float: right;
+}
+
+.card figcaption {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 2px 0px;
+}
+
+.card .post_title {
+  margin: unset;
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif !important;
+}
+
+.card .authors-link,
+.card .categories-link {
+  cursor: pointer;
+  text-decoration: none;
+  font-size: larger;
+  color: #000000;
+  font-family: "Dancing Script", cursive;
+}
+
+.card .categories-link {
+  color: #567284;
+}
+
+/* Right column */
+.rightcolumn {
+  float: right;
+  width: 25%;
+}
+
+.rightcolumn .card {
+  height: inherit !important;
+}
+
+.singlecard {
+  height: inherit;
+}
+
+.singlecard > p {
+  height: inherit;
+}
+
+.singlecard .fakeimg {
+  width: 100%;
+  height: inherit;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+li.loading {
+  list-style: none;
+  width: 100px;
+  height: 100px;
+  float: left;
+  margin-right: 20px;
+  background: #000000;
+}
+
+li.loading img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.filter {
+  position: absolute;
+  padding: 4px 10px;
+  top: 12px;
+  right: 12px;
+  background-color: #01acc4;
+  color: white;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+/* #PAGINATION
+================================================== */
+.pagination {
+  width: 100%;
+  /* Clear floats (clearfix) */
+}
+
+.pagination .prev,
+.pagination .next {
+  width: 50%;
+  float: left;
+}
+
+.pagination .pagination:after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.pagination .pagination button:not(:last-child) {
+  border-right: none;
+  /* Prevent double borders */
+}
+
+/* #Footer
+================================================== */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #000000;
+  color: #f1f1f1;
+  margin-top: 20px;
+}
+
+/* Responsive layout - when the screen is less than 768px wide, make the two columns stack on top of each other instead of next to each other */
+/* MEDIA QUERIES
+Description: Define screen-size breakpoints here.
+(e.g. Desktop, Tablet, Mobile)
+===================================== */
+/* Tablet (Between 768px - 992px)*/
+/* MOBILE (Smaller than 768px)*/
+@media all and (max-width: 767px) {
+  #nav-links #nav-links-menu {
+    display: block;
+  }
+  #nav-links ul {
+    display: none;
+    background: #666;
+    padding: 1em;
+    text-align: left;
+  }
+  #nav-links ul li {
+    display: block;
+  }
+  #nav-links ul li a {
+    display: block;
+    padding: 0.75em 1.5em 0.5em 1.5em;
+  }
+  .card {
+    height: 370px;
+  }
+  .singlecard {
+    height: auto;
+  }
+  .singlecard .fakeimg {
+    width: 100%;
+  }
+  .leftcolumn {
+    width: 100%;
+    padding: 0;
+  }
+  .rightcolumn {
+    display: none;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+/*# sourceMappingURL=style.css.map */
