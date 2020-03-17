@@ -3,10 +3,41 @@ $(document).ready(function() {
     totPosts = 0,
     currentPage = 0,
     paginationCount = 5,
-    filteredposts = [];
+    filteredposts = [],
+    catArr = [],
+    authArr = [];
 
   loadJSON();
-  // JQUERY NAV TOGGLE
+
+  /**
+   * @event  onclick Navigation buttons
+   * @description [Overview] On click of any navigation button, particular button gets higlighted and performs its functionality
+   * @return void
+   */
+  $('body').on('click', '#home-blogs, #about-us, #blog-filter, #contact-us', function() {
+    navValue = $(this).html();
+    $('.ui-links').removeClass('active');
+    $(this).addClass('active');
+
+    if (navValue == 'Home') {
+      $('.filter > *').trigger('click');
+      loadJSON();
+    } else if (navValue == 'About Us') {
+      alert('We are having some issues, Please come back later to know about us');
+    } else if (navValue == 'Blogs') {
+      alert('Please click on author name or category to filter posts');
+    } else {
+      $('html, body').animate({
+        scrollTop: $('#contact').position().top
+      });
+    }
+  });
+
+  /**
+   * @event  onclick Navigation buttons
+   * @description [Overview] JQUERY NAV TOGGLE for mobile devices
+   * @return void
+   */
   $('#nav-links-menu').bind('click', function(event) {
     $('#nav-links ul').slideToggle();
   });
@@ -17,22 +48,15 @@ $(document).ready(function() {
       $('#nav-links ul').removeAttr('style');
     }
   });
-  //header active class toggle
-  $('.nav-links ul li a').on('click', '.ui-links', function() {
-    console.info('Navigation links');
-    $('.ui-links').removeClass('active');
-    $(this).addClass('active');
-  });
 
   /**
    * @event  onclick Pagination buttons
-   * @description [Overview] Access JSOn with localserver
+   * @description [Overview] Navigate between pages
    * @return void
    */
   $('.next, .prev').on('click', function(event) {
     try {
       console.info('On click pagination');
-      // loadPage();
       if (event.target.name === 'prev') {
         currentPage--;
       } else {
@@ -55,39 +79,82 @@ $(document).ready(function() {
    * @description [Overview] Select the list of posts from each author or category
    * @return void
    */
+
   $('.leftcolumn').on('click', '.authors-link , .categories-link', function() {
     try {
-      console.log('Post selected based on filter');
-      categoryValue = $(this).html();
+      console.info('Post selected based on filter');
+      categoryValue = $(this)
+        .text()
+        .trim();
       categoryType = this.className;
-
+      if (categoryType == 'categories-link') {
+        catArr.indexOf(categoryValue) > -1 ? '' : catArr.push(categoryValue);
+      } else {
+        authArr.indexOf(categoryValue) > -1 ? '' : authArr.push(categoryValue);
+      }
       filteredposts = jsonData.filter(function(v) {
-        let filterBasedOn;
-        categoryType == 'categories-link' ? (filterBasedOn = v.category) : (filterBasedOn = v.author);
-        return categoryValue.indexOf(filterBasedOn) > -1;
+        return authArr.length > 0
+          ? catArr.length > 0
+            ? authArr.indexOf(v.author) > -1 && catArr.indexOf(v.category) > -1
+            : authArr.indexOf(v.author) > -1
+          : catArr.indexOf(v.category) > -1;
       });
-      console.log(filteredposts);
       currentPage = 0;
       generatePosts(
         filteredposts.slice(currentPage * paginationCount, currentPage * paginationCount + paginationCount),
         true
       );
-      $('.leftcolumn')
-        .find('.filter')
-        .remove();
-      $('.leftcolumn').append('<div class="filter">' + categoryValue + '</div>');
+      $('.leftcolumn > .filter').empty();
+      for (var i = 0; i < catArr.length; i++) {
+        $('.leftcolumn > .filter').append('<span>' + catArr[i] + '</span>');
+      }
+      for (var i = 0; i < authArr.length; i++) {
+        $('.leftcolumn > .filter').append('<span>' + authArr[i] + '</span>');
+      }
     } catch (err) {
       console.error('Exception occurred onClick author/category :  ' + err.message);
     }
   });
 
-  $('body').on('click', '.filter', function() {
+  $('.leftcolumn').on('click', '.filter > *', function() {
+    var filterVal = $(this)
+        .text()
+        .trim(),
+      index;
     $(this).remove();
     currentPage = 0;
-    filteredposts = [];
-    generatePosts(jsonData.slice(currentPage * paginationCount, currentPage * paginationCount + paginationCount));
+    if (authArr.length > 0) {
+      index = authArr.indexOf(filterVal);
+      if (index > -1) {
+        authArr.splice(index, 1);
+      }
+    }
+    if (catArr.length > 0) {
+      index = catArr.indexOf(filterVal);
+      if (index > -1) {
+        catArr.splice(index, 1);
+      }
+    }
+    // filteredposts = [];
+    if (authArr.length > 0 || catArr.length > 0) {
+      filteredposts = jsonData.filter(function(v) {
+        return authArr.length > 0
+          ? catArr.length > 0
+            ? authArr.indexOf(v.author) > -1 && catArr.indexOf(v.category) > -1
+            : authArr.indexOf(v.author) > -1
+          : catArr.indexOf(v.category) > -1;
+      });
+    } else {
+      filteredposts = jsonData;
+    }
+    generatePosts(filteredposts.slice(currentPage * paginationCount, currentPage * paginationCount + paginationCount));
   });
 
+  /**
+   * @event  onclick Single post display
+   * @description [Overview] Load every 5 data based on pagination
+   * @return void
+   */
   //Individual post
   $('.leftcolumn').on('click', '.readmore', function(event) {
     console.info('On click readmore');
@@ -99,7 +166,18 @@ $(document).ready(function() {
   $('.leftcolumn').on('click', '.back', function(event) {
     console.info('On click back');
     event.preventDefault();
-    generatePosts(jsonData.slice(currentPage * paginationCount, currentPage * paginationCount + paginationCount));
+    var displayPosts = [];
+    if (filteredposts.length > 0) {
+      displayPosts = filteredposts;
+    } else {
+      displayPosts = jsonData;
+    }
+    generatePosts(displayPosts.slice(currentPage * paginationCount, currentPage * paginationCount + paginationCount));
+  });
+
+  //submit button
+  $('body').on('click', '#contact-submit', function(event) {
+    alert('Thank you');
   });
 
   /**
@@ -112,18 +190,18 @@ $(document).ready(function() {
   function generatePosts(data, authorfiltercalled = false, singlepost) {
     try {
       console.info('START :: generatePosts');
+      $('html, body').animate({
+        scrollTop: $('body').position().top
+      });
+
       $(".leftcolumn > *:not('.filter')").remove();
       var leftcolumn = $('.leftcolumn').eq(0);
       var stringHtml = '';
-      let previ, otherImages;
+      let otherImages;
       if (data.length === 0) {
-        leftcolumn.html('No posts found');
+        leftcolumn.append('No posts found');
       } else {
         for (let i = 0; i < data.length; i++) {
-          // previ = i;
-          // if (authorfiltercalled) {
-          //   i = parseInt(data[i].id);
-          // }
           if (singlepost != true) {
             stringHtml +=
               '<article id="' +
@@ -165,6 +243,9 @@ $(document).ready(function() {
           // i = previ;
         }
         leftcolumn.append(stringHtml);
+        $('.leftcolumn').animate({
+          scrollTop: $('.card:first-child').position().top
+        });
         if (singlepost) {
           var $list = $('.image-list');
           $.each(otherImages, function(i, src) {
@@ -188,13 +269,18 @@ $(document).ready(function() {
     }
   }
 
-  //Pagination control
+  /**
+   * @method navigationControl
+   * @description [Overview] Page Navigation Control
+   * @param pagedetails currentPage, totPosts, paginationCount
+   * @return void
+   */
   function navigationControl(currentPage, totPosts, paginationCount) {
     let numberofpages =
       filteredposts.length > 0
         ? Math.ceil(filteredposts.length / paginationCount)
         : Math.ceil(totPosts / paginationCount);
-    console.log('number of pages:: ' + numberofpages);
+    console.info('number of pages:: ' + numberofpages);
     $('.prev').removeAttr('disabled');
     $('.next').removeAttr('disabled');
     if (currentPage == 0 && currentPage >= numberofpages - 1) {
@@ -208,9 +294,10 @@ $(document).ready(function() {
   }
 
   /**
-   * @event  getJSON
+   * @method loadJSON
    * @description [Overview] Access JSOn with localserver
-   * @return generatePosts
+   * @param {This method does not require any parameters} void
+   * @return void
    */
   function loadJSON() {
     $.getJSON('JSON/posts.json', function(data) {
@@ -224,7 +311,6 @@ $(document).ready(function() {
           uniqueCategories.push(data[i].category);
         }
       }
-      console.log(uniqueCategories);
       generatePosts(jsonData.slice(currentPage * paginationCount, currentPage * paginationCount + paginationCount));
     });
   }

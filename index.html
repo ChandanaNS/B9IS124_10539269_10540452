@@ -13,25 +13,28 @@
     <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
   </head>
   <body>
-    <!-- https://codepen.io/kccnma/pen/Bykjr -->
     <header>
       <div id="logo">
         <h1><a href="#">Embetics Digitals</a></h1>
       </div>
     </header>
+
     <!-- Navigation bar -->
     <nav id="nav-links" class="group">
       <div id="nav-links-menu">&#x2261; Menu</div>
-      <ul>
-        <li><a href="#" id="home-blogs">Home</a></li>
-        <li><a href="#" id="about-us">About</a></li>
-        <li><a href="#" id="blog-filter">Blogs</a></li>
-        <li><a href="#" id="contact-us">Contact</a></li>
+      <ul id="navigation">
+        <li><a id="home-blogs" class="ui-links active">Home</a></li>
+        <li><a id="about-us" class="ui-links">About Us</a></li>
+        <li><a id="blog-filter" class="ui-links">Blogs</a></li>
+        <li><a id="contact-us" class="ui-links">Contact</a></li>
       </ul>
     </nav>
+
     <!-- content section -->
     <section class="row">
-      <div class="leftcolumn"></div>
+      <div class="leftcolumn">
+        <div class="filter"></div>
+      </div>
       <div class="rightcolumn">
         <div class="card">
           <h3>Trending</h3>
@@ -56,6 +59,30 @@
         </button>
       </nav>
     </section>
+
+    <!-- contact us  -->
+    <section id="contact" name="contact" class="container">
+      <form action="" method="post">
+        <h3>Quick Contact</h3>
+        <h4>Contact us today, and get reply with in 24 hours!</h4>
+        <fieldset>
+          <input placeholder="Your name" type="text" tabindex="1" required autofocus />
+        </fieldset>
+        <fieldset>
+          <input placeholder="Your Email Address" type="email" tabindex="2" required />
+        </fieldset>
+        <fieldset>
+          <input placeholder="Your Phone Number" type="tel" tabindex="3" required />
+        </fieldset>
+        <fieldset>
+          <textarea placeholder="Type your Message Here...." tabindex="5" required></textarea>
+        </fieldset>
+        <fieldset>
+          <button name="submit" type="submit" id="contact-submit" data-submit="...Sending">Submit</button>
+        </fieldset>
+      </form>
+    </section>
+    <!-- Scrolltop button -->
     <!-- footer section -->
     <footer class="footer">
       <h2>&copy; 2020 Embetics Digitals</h2>

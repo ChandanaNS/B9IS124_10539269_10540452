@@ -2,8 +2,8 @@
 ================================================== */
 
 #nav-links {
-  background: #333;
-  color: #fff;
+  background: $base-color-grey;
+  color: $base-color-white;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -23,15 +23,21 @@
       margin: 0;
       list-style: none;
       display: inline-block;
+      cursor: pointer;
+
       a {
-        color: #fff;
+        color: $base-color-white;
         text-decoration: none;
         display: inline-block;
         padding: 0.9em 1.5em 0.8em 1.5em;
       }
       a:hover {
-        color: #000;
-        background: #aaa;
+        color: $base-color-black;
+        background: $nav-color-grey;
+      }
+      .active {
+        color: $base-color-black;
+        background: $nav-color-grey;
       }
     }
   }
@@ -47,7 +53,7 @@
     }
     ul {
       display: none;
-      background: #666;
+      background: $mob-color-grey;
       padding: 1em;
       text-align: left;
       li {
@@ -59,3 +65,4 @@
       }
     }
   }
+}
